@@ -1,5 +1,5 @@
 const Post = ({ title, content, deleteMethod, id, selected, setSelected }) =>
-    <div className={`card ${selected === null ? ('') : (
+    <div className={`card mb-3 ${selected === null ? ('') : (
         selected.id === id ? 'bg-primary' : ''
     )}`}
         onClick={setSelected}
@@ -7,7 +7,7 @@ const Post = ({ title, content, deleteMethod, id, selected, setSelected }) =>
         <div className="card--body m-2">
             <h5 className="card-title">{title}</h5>
             <p className="card-text">{content}</p>
-            <button className="btn btn-danger" onClick={() => deleteMethod(id)}>Delete</button>
+            <button className="btn btn-danger" onClick={deleteMethod}>Delete</button>
         </div>
     </div>
 

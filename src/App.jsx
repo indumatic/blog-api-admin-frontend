@@ -58,16 +58,17 @@ function App() {
   return <>
     <div className='container-fluid' >
       <div className='row vh-100'>
-        <div className='col-3 d-flex flex-column border-end vh-100'>
-          <div className='flex-grow-1 overflow-auto p-3 '>
+        <div className='col-3 d-flex flex-column vh-100 border-end'>
+          <div className='flex-grow-1 overflow-auto pt-3'>
             {posts && posts.map(post => <Post
               key={post.id}
               title={post.title}
               content={post.content}
-              deleteMethod={deletePost}
+              deleteMethod={() => deletePost(post.id)}
               id={post.id}
               selected={selectedPost}
-              setSelected={() => setSelectedPost(posts.find(p => p.id === post.id))} />)}
+              setSelected={() => setSelectedPost(posts.find(p => p.id === post.id))}
+            />)}
           </div>
           <div className='p-3 border-top bg-white'>
             <button className='btn btn-primary w-100' onClick={newPost}>
