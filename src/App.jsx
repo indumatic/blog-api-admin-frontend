@@ -15,7 +15,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [nav, setNav] = useState("posts");
 
-/*   useEffect(() => {
+  /*   useEffect(() => {
     if (selectedPost !== null) {
       setTitle(selectedPost.title);
       setAbstract(selectedPost.abstract);
@@ -34,19 +34,20 @@ function App() {
             setNav={setNav}
           />
         </div>
-        <div className="row h-100 d-flex flex-column justify-content-center align-content-center">
-          {user ? (
-            nav === "posts" ? (
-              <Posts />
-            ) : nav === "users" ? (
-              <Users />
-            ) : (
-              <h1>Ups! something went wrong!</h1>
-            )
+
+        {user ? (
+          nav === "posts" ? (
+            <Posts />
+          ) : nav === "users" ? (
+            <Users />
           ) : (
+            <h1>Ups! something went wrong!</h1>
+          )
+        ) : (
+          <div className="row h-100 d-flex flex-column justify-content-center align-content-center">
             <LogIn setUser={setUser} />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </>
   );
