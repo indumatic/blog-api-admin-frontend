@@ -3,6 +3,7 @@ import './App.css'
 import Post from './Components/Post'
 import Editor from './Components/Editor'
 import Navbar from './Components/Navbar'
+import LogIn from './Components/LogIn'
 
 function App() {
   const [posts, setPosts] = useState(null)
@@ -10,21 +11,22 @@ function App() {
   const [abstract, setAbstract] = useState('')
   const [content, setContent] = useState('')
   const [selectedPost, setSelectedPost] = useState(null)
+  const [user, setUser] = useState(null)
 
-  useEffect(() => {
+   useEffect(() => {
     fetch('/api/posts')
       .then(response => response.json())
       .then(response => setPosts(response))
   }, [])
 
-  useEffect(() => {
+    useEffect(() => {
     if (selectedPost !== null) {
       setTitle(selectedPost.title)
       setAbstract(selectedPost.abstract)
       setContent(selectedPost.content)
     }
 
-  }, [selectedPost])
+  }, [selectedPost]) 
 
   const newPost = () => {
     fetch('/api/posts', {
@@ -66,44 +68,48 @@ function App() {
       <div className='row'>
         <Navbar brand={'Blog admin dashboard'} />
       </div>
-      <div className='row h-100'>
-        <div className='col-3 h-100 border-end'>
-          <div className='row mb-3'>
-            <button className='btn btn-outline-primary w-100' onClick={newPost}>
-              New
-            </button>
-          </div>
-          <div className='row h-100'>
-            <div className='col overflow-auto h-100'>
-              {posts && posts.map(post => <Post
-                key={post.id}
-                title={post.title}
-                content={post.abstract}
-                deleteMethod={() => deletePost(post.id)}
-                id={post.id}
-                selected={selectedPost}
-                setSelected={() => setSelectedPost(posts.find(p => p.id === post.id))}
-              />)}
+      <div className='row h-100 d-flex flex-column justify-content-center align-content-center'>
+      {user
+        ? <>
+          <div className='col-3 h-100 border-end'>
+            <div className='row mb-3'>
+              <button className='btn btn-outline-primary w-100' onClick={newPost}>
+                New
+              </button>
+            </div>
+            <div className='row h-100'>
+              <div className='col overflow-auto h-100'>
+                {posts && posts.map(post => <Post
+                  key={post.id}
+                  title={post.title}
+                  content={post.abstract}
+                  deleteMethod={() => deletePost(post.id)}
+                  id={post.id}
+                  selected={selectedPost}
+                  setSelected={() => setSelectedPost(posts.find(p => p.id === post.id))}
+                />)}
+              </div>
             </div>
           </div>
-        </div>
-        <div className='col-9 p-4 h-100'>
-          {selectedPost && <Editor
-            titleValue={title}
-            titleHandleChange={(e) => setTitle(e.target.value)}
-            contentValue={content}
-            contentHandleChange={e => setContent(e.target.value)}
-            abstractValue={abstract}
-            abstractHandleChange={e => setAbstract(e.target.value)}
-            id={selectedPost.id}
-            handleUpdate={(e) => {
-              e.preventDefault()
-              updatePost(selectedPost.id)
-            }}
-          />}
-        </div>
-      </div>
-    </div>
+          <div className='col-9 p-4 h-100'>
+            {selectedPost && <Editor
+              titleValue={title}
+              titleHandleChange={(e) => setTitle(e.target.value)}
+              contentValue={content}
+              contentHandleChange={e => setContent(e.target.value)}
+              abstractValue={abstract}
+              abstractHandleChange={e => setAbstract(e.target.value)}
+              id={selectedPost.id}
+              handleUpdate={(e) => {
+                e.preventDefault()
+                updatePost(selectedPost.id)
+              }}
+            />}
+          </div>
+        </>
+        : <LogIn setUser={setUser} />}
+      </div> 
+     </div> 
   </>
 
 }

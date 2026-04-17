@@ -1,4 +1,4 @@
-const Navbar = ({ brand }) => <nav className="navbar bg-primary-subtle">
+const Navbar = ({ brand }) => <nav className="navbar bg-primary">
     <div className="container fluid">
         <span className="navbar-brand h1">{brand}</span>
     </div>
